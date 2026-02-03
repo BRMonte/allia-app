@@ -24,27 +24,31 @@ rails db:seed
 
 ## API Usage
 
-**Base URL:** `/v1`
+**Base URL:** `/v1`  
+**Pagination:** All index endpoints use `kaminari` (default: 20 records per page). Use `?page=N` to navigate.
 
 ### 1. Patients
 
 **List patients**
 `GET /v1/patients`
-*Returns a paginated list of all patients.*
 
 **Get a specific patient**
 `GET /v1/patients/:id`
 
 **Create a patient**
 `POST /v1/patients`
-*Body params:*
-```json
-{
+
+```bash
+curl -X POST http://localhost:3000/v1/patients \
+-H "Content-Type: application/json" \
+-d '{
   "patient": {
-    "name": "string",
-    "email": "string"
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doe@example.com",
+    "date_of_birth": "1990-01-01"
   }
-}
+}'
 ```
 
 ---
@@ -52,22 +56,34 @@ rails db:seed
 ### 2. Treatment Plans
 
 **List treatment plans**
-`GET /v1/treatment_plans`
+`GET /v1/treatment_plans?patient_id=1`
+*Filter by `patient_id` is supported.*
 
 **Create a treatment plan**
 `POST /v1/treatment_plans`
-*Body params:*
-```json
-{
+
+```bash
+curl -X POST http://localhost:3000/v1/treatment_plans \
+-H "Content-Type: application/json" \
+-d '{
   "treatment_plan": {
-    "patient_id": integer,
-    "description": "text"
+    "patient_id": 1,
+    "name": "Physiotherapy Plan",
+    "status": "active",
+    "start_date": "2023-01-01",
+    "end_date": "2023-06-01"
   }
-}
+}'
 ```
 
-**Update a treatment plan**
+**Update treatment plan status**
 `PATCH/PUT /v1/treatment_plans/:id`
+
+```bash
+curl -X PATCH http://localhost:3000/v1/treatment_plans/1 \
+-H "Content-Type: application/json" \
+-d '{ "status": "completed" }'
+```
 
 ---
 
@@ -75,27 +91,33 @@ rails db:seed
 
 **List refill orders**
 `GET /v1/medication_refill_orders`
+*Filters: `treatment_plan_id`, `status`, `requested_date`.*
 
 **Get refill order details**
 `GET /v1/medication_refill_orders/:id`
 
 **Create a refill order**
 `POST /v1/medication_refill_orders`
-*Body params:*
-```json
-{
+
+```bash
+curl -X POST http://localhost:3000/v1/medication_refill_orders \
+-H "Content-Type: application/json" \
+-d '{
   "medication_refill_order": {
-    "treatment_plan_id": integer,
-    "quantity": integer
+    "treatment_plan_id": 1,
+    "requested_date": "2023-10-27",
+    "status": "pending"
   }
-}
+}'
 ```
 
-**Update a refill order**
+**Update refill order status**
 `PATCH/PUT /v1/medication_refill_orders/:id`
 
----
+```bash
+curl -X PATCH http://localhost:3000/v1/medication_refill_orders/1 \
+-H "Content-Type: application/json" \
+-d '{ "status": "shipped" }'
+```
 
-### Health Check
-`GET /up`
-*Returns 200 OK if the app is booted without errors.*
+---
