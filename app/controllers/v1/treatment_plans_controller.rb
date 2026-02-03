@@ -10,29 +10,19 @@ module V1
     end
 
     def create
-      @treatment_plan = TreatmentPlan.new(treatment_plan_params)
-
-      if @treatment_plan.save
-        render json: @treatment_plan, serializer: V1::TreatmentPlanSerializer, status: :created
-      else
-        render json: { errors: @treatment_plan.errors.full_messages }, status: :unprocessable_entity
-      end
+      @treatment_plan = TreatmentPlan.create!(treatment_plan_params)
+      render json: @treatment_plan, serializer: V1::TreatmentPlanSerializer, status: :created
     end
 
     def update
-      if @treatment_plan.update(status: params[:status])
-        render json: @treatment_plan, serializer: V1::TreatmentPlanSerializer, status: :ok
-      else
-        render json: { errors: @treatment_plan.errors.full_messages }, status: :unprocessable_entity
-      end
+      @treatment_plan.update!(status: params[:status])
+      render json: @treatment_plan, serializer: V1::TreatmentPlanSerializer, status: :ok
     end
 
     private
 
     def set_treatment_plan
       @treatment_plan = TreatmentPlan.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render json: { error: "Treatment plan not found" }, status: :not_found
     end
 
     def treatment_plan_params

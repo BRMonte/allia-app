@@ -12,21 +12,14 @@ module V1
     end
 
     def create
-      @patient = Patient.new(patient_params)
-
-      if @patient.save
-        render json: @patient, serializer: V1::PatientSerializer, status: :created
-      else
-        render json: { errors: @patient.errors.full_messages }, status: :unprocessable_entity
-      end
+      @patient = Patient.create!(patient_params)
+      render json: @patient, serializer: V1::PatientSerializer, status: :created
     end
 
     private
 
     def set_patient
       @patient = Patient.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render json: { error: "Patient not found" }, status: :not_found
     end
 
     def patient_params

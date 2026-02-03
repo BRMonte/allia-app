@@ -19,29 +19,19 @@ module V1
     end
 
     def create
-      @medication_refill_order = MedicationRefillOrder.new(medication_refill_order_params)
-
-      if @medication_refill_order.save
-        render json: @medication_refill_order, serializer: V1::MedicationRefillOrderSerializer, status: :created
-      else
-        render json: { errors: @medication_refill_order.errors.full_messages }, status: :unprocessable_entity
-      end
+      @medication_refill_order = MedicationRefillOrder.create!(medication_refill_order_params)
+      render json: @medication_refill_order, serializer: V1::MedicationRefillOrderSerializer, status: :created
     end
 
     def update
-      if @medication_refill_order.update(status: params[:status])
-        render json: @medication_refill_order, serializer: V1::MedicationRefillOrderSerializer, status: :ok
-      else
-        render json: { errors: @medication_refill_order.errors.full_messages }, status: :unprocessable_entity
-      end
+      @medication_refill_order.update!(status: params[:status])
+      render json: @medication_refill_order, serializer: V1::MedicationRefillOrderSerializer, status: :ok
     end
 
     private
 
     def set_medication_refill_order
       @medication_refill_order = MedicationRefillOrder.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render json: { error: "Medication refill order not found" }, status: :not_found
     end
 
     def medication_refill_order_params
