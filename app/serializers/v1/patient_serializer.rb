@@ -5,7 +5,7 @@ module V1
                :last_name,
                :date_of_birth,
                :email,
-               :created_at,
+               :created_at
 
     def date_of_birth
       format_date(object.date_of_birth)

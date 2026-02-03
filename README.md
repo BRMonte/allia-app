@@ -1,24 +1,24 @@
-# README
+# Patient Treatment Plans API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Simple Rails API for managing patients, treatment plans, and medication refill orders.
 
-Things you may want to cover:
+---
 
-* Ruby version
+## Gems
 
-* System dependencies
+- `kaminari` – pagination
+- `active_model_serializers` – JSON serialization
+- `pg` – PostgreSQL adapter
+- `puma` – app server
+- `bootsnap` – boot performance
+- `rspec-rails` – testing
+- `factory_bot_rails` – test data
+- `rubocop-rails-omakase` – linting
+- `brakeman` – security scanning
 
-* Configuration
+## Setup
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```bash
+bundle install
+rails db:create db:migrate
+rails db:seed
