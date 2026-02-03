@@ -18,3 +18,13 @@ Simple Rails API for managing patients, treatment plans, and medication refill o
 bundle install
 rails db:create db:migrate
 rails db:seed
+
+## API Usage
+
+Base URL: `/v1`
+
+### Patients
+
+**List patients**
+```http
+GET /v1/patients
