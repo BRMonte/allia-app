@@ -10,7 +10,6 @@ class CreateTreatmentPlans < ActiveRecord::Migration[7.2]
       t.timestamps
     end
 
-    add_index :treatment_plans, :patient_id
     add_index :treatment_plans, :status
   end
 end
