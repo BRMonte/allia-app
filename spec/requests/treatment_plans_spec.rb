@@ -55,21 +55,29 @@ RSpec.describe "V1::TreatmentPlans API", type: :request do
   end
 
   describe "PATCH /v1/treatment_plans/:id" do
-    let(:treatment_plan) { create(:treatment_plan, patient: patient, status: "active") }
+  let(:treatment_plan) { create(:treatment_plan, patient: patient, status: "active") }
 
-    it "updates treatment plan status" do
-      patch "/v1/treatment_plans/#{treatment_plan.id}",
-            params: { status: "completed" }
+  it "updates treatment plan status" do
+    patch "/v1/treatment_plans/#{treatment_plan.id}",
+          params: {
+            treatment_plan: {
+              status: "completed"
+            }
+          }
 
-      expect(response).to have_http_status(:ok)
-      expect(treatment_plan.reload.status).to eq("completed")
-    end
-
-    it "returns not found" do
-      patch "/v1/treatment_plans/999999",
-            params: { status: "completed" }
-
-      expect(response).to have_http_status(:not_found)
-    end
+    expect(response).to have_http_status(:ok)
+    expect(treatment_plan.reload.status).to eq("completed")
   end
+
+  it "returns not found" do
+    patch "/v1/treatment_plans/999999",
+          params: {
+            treatment_plan: {
+              status: "completed"
+            }
+          }
+
+    expect(response).to have_http_status(:not_found)
+  end
+end
 end

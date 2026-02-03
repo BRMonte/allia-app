@@ -15,7 +15,7 @@ module V1
     end
 
     def update
-      @treatment_plan.update!(status: params[:status])
+      @treatment_plan.update!(treatment_plan_params)
       render json: @treatment_plan, serializer: V1::TreatmentPlanSerializer, status: :ok
     end
 

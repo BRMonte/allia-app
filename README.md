@@ -57,7 +57,6 @@ curl -X POST http://localhost:3000/v1/patients \
 
 **List treatment plans**
 `GET /v1/treatment_plans?patient_id=1`
-*Filter by `patient_id` is supported.*
 
 **Create a treatment plan**
 `POST /v1/treatment_plans`
@@ -77,7 +76,7 @@ curl -X POST http://localhost:3000/v1/treatment_plans \
 ```
 
 **Update treatment plan status**
-`PATCH/PUT /v1/treatment_plans/:id`
+`PATCH /v1/treatment_plans/:id`
 
 ```bash
 curl -X PATCH http://localhost:3000/v1/treatment_plans/1 \
