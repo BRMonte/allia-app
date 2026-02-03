@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   namespace :v1 do
     resources :patients, only: [ :index, :show, :create ]
     resources :treatment_plans, only: [ :index, :create, :update ]
+    resources :medication_refill_orders, only: [ :index, :show, :create, :update ]
   end
 end
